@@ -9,6 +9,8 @@
 (define-class Hooks ()
   (number #:getter get-number-hook #:init-keyword #:number)
   (nil #:getter get-nil-hook #:init-keyword #:nil)
+  (lst #:getter get-list-hook #:init-keyword #:list)
+  (object #:getter get-object-hook #:init-keyword #:object)
   (string #:getter get-string-hook #:init-keyword #:string)
   (boolean #:getter get-boolean-hook #:init-keyword #:boolean))
 
@@ -41,21 +43,22 @@
 (define* (parse-js-object obj #:key hooks)
   (if (symbol? obj) '()
       (let ((name (car obj))
+            (object-hook (get-object-hook hooks))
             (values (cdr obj)))
-        (map (lambda (val) (parse-js-object-entry val #:hooks hooks)) values))))
+        (object-hook (map (lambda (val) (parse-js-object-entry val #:hooks hooks)) values)))))
 
 
 (define* (parse-js-array obj #:key hooks)
   (if (symbol? obj) #()
       (let* ((name (car obj))
              (values (cdr obj))
+             (list-hook (get-list-hook hooks))
              (lenvalues (length values)))
-        (list->vector (map
-                       (lambda (v) (parse-js-value v #:hooks hooks))
-                       values)))))
+        (list-hook (list->vector (map
+                        (lambda (v) (parse-js-value v #:hooks hooks))
+                        values))))))
 
 
-(define (identity v) v)
 
 (define* (parse-js-value  obj #:key hooks)
   (let* ((value (cadr obj))
@@ -73,6 +76,8 @@
                            #:optional #:key
                            (number-hook i)
                            (nil-hook i)
+                           (list-hook i)
+                           (object-hook i)
                            (string-hook i)
                            (boolean-hook i))
   (let ((object (peg:tree (match-pattern json string)))
@@ -80,6 +85,8 @@
                  #:number number-hook
                  #:string string-hook
                  #:nil nil-hook
+                 #:list list-hook
+                 #:object object-hook
                  #:boolean boolean-hook)))
     (if object
         (parse-js-value object #:hooks hooks) 'JSON-NOT-CORRECT)))
