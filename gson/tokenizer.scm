@@ -60,6 +60,6 @@ js-value-constant <-- 'false' / 'true' / 'null'
 
 ;;; To Level Json Object
 (define-peg-string-patterns
-  "json <-- js-whitespace* json-inner js-whitespace* !.
+  "json <-- js-whitespace* json-inner js-whitespace*
 json-inner <- js-object / js-array / js-number / js-string / js-value-constant
 ")
