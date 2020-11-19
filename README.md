@@ -52,6 +52,8 @@ sudo apt-get install build-essential
 
 Once you've installed make, run the following command to install gson.
 ```bash
+git clon https://github.com/ayys/gson.git
+cd gson
 sudo make install
 ```
 
