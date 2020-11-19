@@ -57,10 +57,11 @@ sudo make install
 ```
 
 ## Documentation
+
 GSON module exports size functions in total. The definition and usage
 examples of each of the functions is given below.
 
-#### json-string->scm
+### json-string->scm
 
 ```scheme
 json-string->scm (string #:optional #:key number-hook nil-hook
@@ -69,7 +70,25 @@ json-string->scm (string #:optional #:key number-hook nil-hook
 Parse a JSON string into scheme expression. It optionally takes hooks
 for various JSON data-types. Hooks are described in a separate section.
 
-#### json-port->scm
+#### Example
+
+```scheme
+;;; Import gson
+(use-modules (gson))
+
+;;; define code to be a string containing json
+(define code "[1, 2, 3]")
+
+;;; Convert JSON string to scheme expressions
+(json-string->scm code)
+```
+
+##### Output
+```
+#(1 2 3)
+```
+
+### json-port->scm
 
 ```scheme
 json-port->scm (port #:optional #:key number-hook nil-hook
@@ -79,7 +98,7 @@ A wrapper around [json-string->scm](#json-string-scm) which reads takes a port c
 `port' for JSON string and outputs scheme expression. optional hook
 arguments are explained in a sepratate secion.
 
-#### json-file->scm
+### json-file->scm
 
 ```scheme
 json-file->scm (filename #:optional #:key number-hook nil-hook
@@ -90,20 +109,43 @@ as argument and outputs scheme expressions that correspond to the JSON
 data in given file. Optional hook arguments are explain in a separate section.
 
 
-#### scm->json-string
+### scm->json-string
 
 ```scheme
 scm->json-string (val)
 ```
 
-#### scm->json-port
+### scm->json-port
 
 ```scheme
 scm->json-port (port code)
 ```
 
-#### scm->json-file
+### scm->json-file
 
 ```scheme
 scm->json-file (filename code)
 ```
+
+### Hooks
+
+### Exceptions Handling
+
+### Default Conversion Format
+
+
+## License
+Copyright (C) 2020 Ayush Jha <ayushjha@pm.me>
+
+gson is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 3 of the License, or (at your
+option) any later version.
+
+gson is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with gson. If not, see https://www.gnu.org/licenses/.
