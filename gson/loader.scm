@@ -6,6 +6,8 @@
   #:use-module (oop goops)
   #:export (json-string->scm))
 
+(define GSON-JSON-INVALID 'GSON-JSON-INVALID)
+
 (define-class Hooks ()
   (number #:getter get-number-hook #:init-keyword #:number)
   (nil #:getter get-nil-hook #:init-keyword #:nil)
