@@ -1,10 +1,5 @@
 ![gson logo](https://i.ibb.co/grwL3NJ/gson-header.png "gson header")
 
-# GSON
-
-GSON is an easy-to-use JSON library for
-[Guile](https://www.gnu.org/software/guile/ "GNU/Guile Homepage").
-
 Table of Contents
 =================
 
