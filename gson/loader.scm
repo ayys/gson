@@ -23,7 +23,10 @@
 (define* (parse-js-number obj #:key hooks)
   (let ((number (cadr obj))
         (hook (get-number-hook hooks)))
-    (hook (string->number (cadr obj)))))
+    (hook (catch
+            'out-of-range
+            (lambda () (string->number number))
+            (lambda _ number)))))
 
 (define* (parse-js-value-constant obj #:key hooks)
   (let ((nil-hook (get-nil-hook hooks))
