@@ -1,4 +1,4 @@
-![gson logo](https://i.ibb.co/NyW6TgK/dechi-logo.png "gson logo")
+![gson logo](https://i.ibb.co/1dgLpL9/dechi-logo.png "gson logo")
 
 # GSON
 
