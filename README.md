@@ -72,6 +72,7 @@ for various JSON data-types. Hooks are described in a separate section.
 
 #### Example
 
+**sample.scm**
 ```scheme
 ;;; Import gson
 (use-modules (gson))
@@ -115,6 +116,7 @@ arguments are explained in a sepratate secion.
 }}
 ```
 
+**sample.scm**
 ```scheme
 ;;; Import gson
 (use-modules (gson))
@@ -174,6 +176,7 @@ data in given file. Optional hook arguments are explain in a separate section.
 }}
 ```
 
+**sample.scm**
 ```scheme
 ;;; Import gson
 (use-modules (gson))
