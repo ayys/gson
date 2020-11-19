@@ -4,7 +4,7 @@ GSON is an easy-to-use JSON library for
 [Guile](https://www.gnu.org/software/guile/ "GNU/Guile Homepage").
 
 ## Getting Started
-```guile
+```scheme
 (use-modules (gson)
              (ice-9 format))
 
