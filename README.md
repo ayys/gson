@@ -98,6 +98,25 @@ A wrapper around [json-string->scm](#json-string-scm) which reads takes a port c
 `port' for JSON string and outputs scheme expression. optional hook
 arguments are explained in a sepratate secion.
 
+#### Example
+
+```scheme
+;;; Import gson
+(use-modules (gson))
+
+;;; define code to be a string containing json
+(define code "[1, 2, 3]")
+
+;;; Convert JSON string to scheme expressions
+(json-string->scm code)
+```
+
+##### Output
+```
+#(1 2 3)
+```
+
+
 ### json-file->scm
 
 ```scheme
@@ -107,6 +126,56 @@ json-file->scm (filename #:optional #:key number-hook nil-hook
 A file-wrapper around  [json-string->scm](#json-string-scm) function that takes a filename
 as argument and outputs scheme expressions that correspond to the JSON
 data in given file. Optional hook arguments are explain in a separate section.
+#### Example
+
+**sample.json**
+```json
+{"widget": {
+    "debug": "on",
+    "window": {
+        "title": "Sample Konfabulator Widget",
+        "name": "main_window",
+        "width": 500,
+        "height": 500
+    },
+    "image": {
+        "src": "Images/Sun.png",
+        "name": "sun1",
+        "hOffset": 250,
+        "vOffset": 250,
+        "alignment": "center"
+    },
+    "text": {
+        "data": "Click Here",
+        "size": 36,
+        "style": "bold",
+        "name": "text1",
+        "hOffset": 250,
+        "vOffset": 100,
+        "alignment": "center",
+        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+    }
+}}
+```
+
+```scheme
+;;; Import gson
+(use-modules (gson))
+
+;;; define code to be a string containing json
+(define code "[1, 2, 3]")
+
+;;; Convert JSON string to scheme expressions
+(json-file->scm "sample.json")
+```
+
+##### Output
+```
+(("widget" ("debug" . "on") ("window" ("title" . "Sample Konfabulator Widget") ("name" . "main_window") ("width" . 500) ("height" . 500)) ("image" ("src" . "Images/Sun.png") ("name" . "sun1") ("hOffset" . 250) ("vOffset" . 250) ("alignment" .
+"center")) ("text" ("data" . "Click Here") ("size" . 36) ("style" . "bold") ("name" . "text1") ("hOffset" . 250) ("vOffset"
+. 100) ("alignment" . "center") ("onMouseUp" . "sun1.opacity = (sun1.opacity / 100) * 90;"))))
+
+```
 
 
 ### scm->json-string
