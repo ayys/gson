@@ -108,3 +108,40 @@
         (parse-js-value object #:hooks hooks)
         (throw GSON-JSON-INVALID '(0 0)))))
 
+(define* (json-port->scm port
+                         #:optional #:key
+                         (number-hook i)
+                         (nil-hook i)
+                         (list-hook i)
+                         (object-hook i)
+                         (string-hook i)
+                         (boolean-hook i))
+  (let ((code (get-string-all port)))
+    (json-string->scm
+     code
+     #:number-hook number-hook
+     #:nil-hook nil-hook
+     #:list-hook list-hook
+     #:object-hook object-hook
+     #:string-hook string-hook
+     #:boolean-hook boolean-hook)))
+
+(define* (json-file->scm filename
+                         #:optional #:key
+                         (number-hook i)
+                         (nil-hook i)
+                         (list-hook i)
+                         (object-hook i)
+                         (string-hook i)
+                         (boolean-hook i))
+  (call-with-input-file
+      filename
+    (lambda (port)
+      (json-port->scm
+       port
+       #:number-hook number-hook
+       #:nil-hook nil-hook
+       #:list-hook list-hook
+       #:object-hook object-hook
+       #:string-hook string-hook
+       #:boolean-hook boolean-hook))))
