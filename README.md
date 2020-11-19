@@ -58,8 +58,8 @@ sudo make install
 
 ## Documentation
 
-GSON module exports size functions in total. The definition and usage
-examples of each of the functions is given below.
+GSON module exports size procedures in total. The definition and usage
+examples of each of the procedures is given below.
 
 ### json-string->scm
 
@@ -141,7 +141,7 @@ arguments are explained in a sepratate secion.
 json-file->scm (filename #:optional #:key number-hook nil-hook
     list-hook object-hook string-hook boolean-hook)
 ```
-A file-wrapper around  [json-string->scm](#json-string-scm) function that takes a filename
+A file-wrapper around  [json-string->scm](#json-string-scm) procedure that takes a filename
 as argument and outputs scheme expressions that correspond to the JSON
 data in given file. Optional hook arguments are explain in a separate section.
 #### Example
@@ -231,6 +231,99 @@ scm->json-file (filename code)
 ```
 
 ### Hooks
+gson hooks are optional keyword arguments sent to
+[json-string->scm](#json-string-scm),
+[json-port->scm](#json-port-scm), [json-file->scm](#json-file-scm)
+procedures which are then applied to the scheme expressions parsed from
+the input JSON. Hooks let the user transform the output of the parser.
+
+
+#### object-hook
+object-hook is an optional procedure that will be called with the
+result of any JSON objects decoded (a [List](https://www.gnu.org/software/guile/manual/html_node/Lists.html)). The return value of the
+object-hook will be used instead of the
+[list](https://www.gnu.org/software/guile/manual/html_node/Lists.html).
+
+object-hook takes in a list as argument and produces any output.
+
+##### Example
+```scheme
+(lambda (lst)
+    (list->vector lst))
+```
+
+#### list-hook
+list-hook is another optional procedure that will be called on the
+result of any JSON lists decoded (a
+[Vector](https://www.gnu.org/software/guile/manual/html_node/Vectors.html)). The
+resulting value will be used in place of the vector.
+
+object-hook takes in a vector as argument and produces any output.
+
+##### Example
+```scheme
+(lambda (vector)
+    (vector->list lst))
+```
+
+
+#### number-hook
+number-hook is a optional procedure that is called on any
+[numbers](https://www.gnu.org/software/guile/manual/html_node/Numbers.html)
+or
+[strings](https://www.gnu.org/software/guile/manual/html_node/Strings.html)
+encountered while decoding JSON data. The resulting value
+is used in place of the number.
+
+object-hook takes in a number/string as argument and produces any output.
+
+##### Example
+```scheme
+(lambda (num-or-string)
+    (if (number? num-or-string)
+        (1+ num-or-string)
+        0))
+```
+
+#### string-hook
+string-hook, as the name suggests is called everything the gson parses
+a
+[string](https://www.gnu.org/software/guile/manual/html_node/Strings.html).
+The resulting value is used in place of the string.
+
+string-hook takes in a string as argument and produces any output.
+
+##### Example
+```scheme
+(lambda (string)
+    (string-length string))
+```
+The example above replaces string with the length of said string.
+
+#### boolean-hook
+boolean-hook is an optional procedure that will be called with the
+result of any JSON objects decoded (a [boolean](https://www.gnu.org/software/guile/manual/html_node/Booleans.html#Booleans)). The return value of the
+boolean-hook will be used instead of the [boolean](https://www.gnu.org/software/guile/manual/html_node/Booleans.html#Booleans).
+
+boolean-hook takes in a boolean as argument and produces any output.
+
+##### Example
+```scheme
+(lambda (bool)
+    (not string))
+```
+
+#### nil-hook
+By default, nil in JSON data maps to `#nil` in scheme expression. You
+can change this with the nil-hook that is a procedure which is called
+on all teh nil values in JSON data. The output of that procedure is
+used instead of #nil.
+
+##### Example
+```scheme
+(lambda (nil-value) #f)
+```
+This example shows a hook that maps nil value to `#f`.
 
 ### Exception Handling
 A GSON-JSON-INVALID exception is thrown if an error is found during
