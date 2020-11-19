@@ -232,7 +232,40 @@ scm->json-file (filename code)
 
 ### Hooks
 
-### Exceptions Handling
+### Exception Handling
+A GSON-JSON-INVALID exception is thrown if an error is found during
+JSON parsing with a list of two elements as argument. The first
+element of list contains line number and second element contains
+column number wherein the syntax error occured.
+
+Here is a simple example to demonstrate exception handling with gson.
+
+```scheme
+(use-modules
+ (gson)
+ (ice-9 format))
+
+;;; Incorrect JSON - Notice the comma after closing square bracket
+(define code "[1, 2],")
+
+(define x (catch GSON-JSON-INVALID
+            (lambda ()
+              (json-string->scm code))
+            (lambda (key . args)
+              (let ((line (caar args))
+                    (column (cadar args)))
+                (format #t "Error: Syntax error on line ~d:~d\n" line column)
+                #f))))
+
+(if x (display x))
+(newline)
+
+```
+
+##### Output
+```
+Error: Syntax error on line 0:6
+```
 
 ### Default Conversion Format
 
