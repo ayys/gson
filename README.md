@@ -75,7 +75,7 @@ for various JSON data-types. Hooks are described in a separate section.
 json-port->scm (port #:optional #:key number-hook nil-hook
     list-hook object-hook string-hook boolean-hook)
 ```
-A wrapper around json-string->scm which reads takes a port called
+A wrapper around [json-string->scm](#json-string-scm) which reads takes a port called
 `port' for JSON string and outputs scheme expression. optional hook
 arguments are explained in a sepratate secion.
 
@@ -85,7 +85,7 @@ arguments are explained in a sepratate secion.
 json-file->scm (filename #:optional #:key number-hook nil-hook
     list-hook object-hook string-hook boolean-hook)
 ```
-A file-wrapper around json-string->scm function that takes a filename
+A file-wrapper around  [json-string->scm](#json-string-scm) function that takes a filename
 as argument and outputs scheme expressions that correspond to the JSON
 data in given file. Optional hook arguments are explain in a separate section.
 
