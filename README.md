@@ -69,7 +69,7 @@ json-string->scm (string #:optional #:key number-hook nil-hook
     list-hook object-hook string-hook boolean-hook)
 ```
 Parse a JSON string into scheme expression. It optionally takes hooks
-for various JSON data-types. Hooks are described in a separate section.
+for various JSON data-types. Hooks are described in a [separate section](#hooks).
 
 #### Example
 
@@ -98,7 +98,7 @@ json-port->scm (port #:optional #:key number-hook nil-hook
 ```
 A wrapper around [json-string->scm](#json-string-scm) which reads takes a port called
 `port' for JSON string and outputs scheme expression. optional hook
-arguments are explained in a sepratate secion.
+arguments are explained in a [separate section](#hooks).
 
 #### Example
 
@@ -144,7 +144,7 @@ json-file->scm (filename #:optional #:key number-hook nil-hook
 ```
 A file-wrapper around  [json-string->scm](#json-string-scm) procedure that takes a filename
 as argument and outputs scheme expressions that correspond to the JSON
-data in given file. Optional hook arguments are explain in a separate section.
+data in given file. Optional hook arguments are explain in a [separate section](#hooks).
 #### Example
 
 **sample.json**
@@ -214,9 +214,29 @@ data in given file. Optional hook arguments are explain in a separate section.
 
 
 ### scm->json-string
-
 ```scheme
 scm->json-string (val)
+```
+Takes scheme expression as `val`, and converts it to JSON expression. For
+conversion datatypes, refer to [default conversion format](#default-conversion-format).
+
+#### Example
+
+**sample.scm**
+```scheme
+;;; Import gson
+(use-modules (gson))
+
+;;; define code to be a string containing json
+(define code "#(1 #f 3)")
+
+;;; Convert JSON string to scheme expressions
+(display (scm->json-string code))
+```
+
+##### Output
+```scheme
+[1, false, 3]
 ```
 
 ### scm->json-port
@@ -224,12 +244,18 @@ scm->json-string (val)
 ```scheme
 scm->json-port (port code)
 ```
+This is a wrapper around [scm->json-string](#scm-json-string) which
+takes in an input port, reads scm data from it and converts it to JSON
+string. For more details on conversion, refer to [default conversion format](#default-conversion-format).
 
 ### scm->json-file
 
 ```scheme
 scm->json-file (filename code)
 ```
+This is a wrapper around [scm->json-string](#scm-json-string) which
+takes in an input filename, reads scm data from it and converts it to JSON string.
+For more details on conversion, refer to [default conversion format](#default-conversion-format).
 
 ### Hooks
 gson hooks are optional keyword arguments sent to
