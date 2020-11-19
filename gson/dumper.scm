@@ -1,6 +1,8 @@
 (define-module (gson dumper)
   #:use-module (ice-9 format)
-  #:export (scm->json-string))
+  #:export (scm->json-string
+            scm->json-port
+            scm->json-file))
 
 (define (scm->json-string val)
   (cond ((number? val) (number->string val))
@@ -11,6 +13,13 @@
         ((nil? val) "null")
         ((boolean? val) (if val "true" "false"))))
 
+(define (scm->json-port port code)
+  (display (scm->json-string code) port))
+
+(define (scm->json-file filename code)
+  (call-with-output-file filename
+    (lambda (port)
+      (display (scm->json-string code) port))))
 
 (define (vector->json-array v)
   (if (eq? (vector-length v) 0) "[]"
