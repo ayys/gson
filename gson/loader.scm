@@ -58,8 +58,8 @@
              (list-hook (get-list-hook hooks))
              (lenvalues (length values)))
         (list-hook (list->vector (map
-                        (lambda (v) (parse-js-value v #:hooks hooks))
-                        values))))))
+                                  (lambda (v) (parse-js-value v #:hooks hooks))
+                                  values))))))
 
 
 
