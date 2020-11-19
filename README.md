@@ -266,6 +266,10 @@ Here is a simple example to demonstrate exception handling with gson.
 ```
 Error: Syntax error on line 0:6
 ```
+Notice in the above example, the input JSON string contained syntax
+error after the closing square-bracket. The error was thrown by gson
+and caught by the user after which a clean error message was printed
+to the default output.
 
 ### Default Conversion Format
 
