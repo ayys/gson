@@ -237,6 +237,23 @@ gson hooks are optional keyword arguments sent to
 procedures which are then applied to the scheme expressions parsed from
 the input JSON. Hooks let the user transform the output of the parser.
 
+#### Example of json-string->scm with hooks
+
+```scheme
+;;; Import gson
+(use-modules (gson))
+
+;;; define code to be a string containing json
+(define code "[4, \"two\", false]")
+
+;;; Convert JSON string to scheme expressions
+(display
+    (json-string->scm
+        code
+            #:number-hook (lambda (num-or-string) (1+ num-or-string))
+            #:string-hook (lambda (string) (string-length string))
+            #:boolean-hook (lambda (bool) (not bool))))
+```
 
 #### object-hook
 object-hook is an optional procedure that will be called with the
