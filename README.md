@@ -3,6 +3,33 @@
 GSON is an easy-to-use JSON library for
 [Guile](https://www.gnu.org/software/guile/ "GNU/Guile Homepage").
 
+Table of Contents
+=================
+
+   * [GSON](#gson)
+      * [Getting Started](#getting-started)
+      * [Installation](#installation)
+         * [Installing make on Debian / Ubuntu](#installing-make-on-debian--ubuntu)
+      * [Documentation](#documentation)
+         * [json-string-&gt;scm](#json-string-scm)
+         * [json-port-&gt;scm](#json-port-scm)
+         * [json-file-&gt;scm](#json-file-scm)
+         * [scm-&gt;json-string](#scm-json-string)
+         * [scm-&gt;json-port](#scm-json-port)
+         * [scm-&gt;json-file](#scm-json-file)
+         * [Hooks](#hooks)
+            * [Example of json-string-&gt;scm with hooks](#example-of-json-string-scm-with-hooks)
+            * [object-hook](#object-hook)
+            * [list-hook](#list-hook)
+            * [number-hook](#number-hook)
+            * [string-hook](#string-hook)
+            * [boolean-hook](#boolean-hook)
+            * [nil-hook](#nil-hook)
+         * [Exception Handling](#exception-handling)
+         * [Default Conversion Format](#default-conversion-format)
+      * [License](#license)
+
+
 ## Getting Started
 
 Let's get started with a very simple example. This example does not
