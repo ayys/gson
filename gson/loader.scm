@@ -83,13 +83,28 @@
                            (object-hook i)
                            (string-hook i)
                            (boolean-hook i))
-  (let ((object (peg:tree (match-pattern json string)))
-        (hooks (make Hooks
-                 #:number number-hook
-                 #:string string-hook
-                 #:nil nil-hook
-                 #:list list-hook
-                 #:object object-hook
-                 #:boolean boolean-hook)))
+  (let* ((match (match-pattern json string))
+         (object (peg:tree match))
+         (output-start (peg:start match))
+         (output-length (peg:end match))
+         (input-length (string-length string))
+         (hooks (make Hooks
+                  #:number number-hook
+                  #:string string-hook
+                  #:nil nil-hook
+                  #:list list-hook
+                  #:object object-hook
+                  #:boolean boolean-hook)))
+    (if (not (eq? 0 output-start))
+        (throw GSON-JSON-INVALID '(0 0)))
+    (if (> input-length output-length)
+        (begin
+          (let* ((number-of-lines (string-count (peg:substring match) #\newline))
+                 (column (if (zero? number-of-lines)
+                             output-length
+                             (remainder output-length number-of-lines))))
+            (throw GSON-JSON-INVALID (list number-of-lines column)))))
     (if object
-        (parse-js-value object #:hooks hooks) 'JSON-NOT-CORRECT)))
+        (parse-js-value object #:hooks hooks)
+        (throw GSON-JSON-INVALID '(0 0)))))
+
