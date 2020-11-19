@@ -60,6 +60,8 @@ sudo make install
 GSON module exports size functions in total. The definition and usage
 examples of each of the functions is given below.
 
+#### json-string->scm
+
 ```scheme
 json-string->scm (string #:optional #:key number-hook nil-hook
     list-hook object-hook string-hook boolean-hook)
@@ -67,6 +69,7 @@ json-string->scm (string #:optional #:key number-hook nil-hook
 Parse a JSON string into scheme expression. It optionally takes hooks
 for various JSON data-types. Hooks are described in a separate section.
 
+#### json-port->scm
 
 ```scheme
 json-port->scm (port #:optional #:key number-hook nil-hook
@@ -76,6 +79,7 @@ A wrapper around json-string->scm which reads takes a port called
 `port' for JSON string and outputs scheme expression. optional hook
 arguments are explained in a sepratate secion.
 
+#### json-file->scm
 
 ```scheme
 json-file->scm (filename #:optional #:key number-hook nil-hook
@@ -85,14 +89,21 @@ A file-wrapper around json-string->scm function that takes a filename
 as argument and outputs scheme expressions that correspond to the JSON
 data in given file. Optional hook arguments are explain in a separate section.
 
+
+#### scm->json-string
+
 ```scheme
-scm->json-file (filename code)
+scm->json-string (val)
 ```
+
+#### scm->json-port
 
 ```scheme
 scm->json-port (port code)
 ```
 
+#### scm->json-file
+
 ```scheme
-scm->json-string (val)
+scm->json-file (filename code)
 ```
