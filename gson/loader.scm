@@ -4,7 +4,10 @@
   #:use-module (ice-9 peg)
   #:use-module (gson tokenizer)
   #:use-module (oop goops)
-  #:export (json-string->scm))
+  #:export (json-string->scm
+            json-port->scm
+            json-file->scm
+            GSON-JSON-INVALID))
 
 (define GSON-JSON-INVALID 'GSON-JSON-INVALID)
 
