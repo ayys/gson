@@ -80,7 +80,7 @@ for various JSON data-types. Hooks are described in a separate section.
 (define code "[1, 2, 3]")
 
 ;;; Convert JSON string to scheme expressions
-(json-string->scm code)
+(display (json-string->scm code))
 ```
 
 ##### Output
@@ -100,23 +100,39 @@ arguments are explained in a sepratate secion.
 
 #### Example
 
+**sample.json**
+```json
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+```
+
 ```scheme
 ;;; Import gson
 (use-modules (gson))
 
-;;; define code to be a string containing json
-(define code "[1, 2, 3]")
-
-;;; Convert JSON string to scheme expressions
-(json-string->scm code)
+(call-with-input-file (cadr (command-line))
+    (lambda (port) (display (json-string->scm code))))
 ```
 
 ##### Output
 ```
-#(1 2 3)
+(("menu"
+  ("id" . "file")
+  ("value" . "File")
+  ("popup"
+   ("menuitem" . #((("value" . "New") ("onclick" . "CreateNewDoc()"))
+                   (("value" . "Open") ("onclick" . "OpenDoc()"))
+                   (("value" . "Close") ("onclick" . "CloseDoc()")))))))
 ```
-
-
 ### json-file->scm
 
 ```scheme
@@ -162,38 +178,34 @@ data in given file. Optional hook arguments are explain in a separate section.
 ;;; Import gson
 (use-modules (gson))
 
-;;; define code to be a string containing json
-(define code "[1, 2, 3]")
-
 ;;; Convert JSON string to scheme expressions
-(json-file->scm "sample.json")
+(display (json-file->scm "sample.json"))
 ```
 
 ##### Output
 ```
 (("widget"
-("debug" . "on")
-("window"
-    ("title" . "Sample Konfabulator Widget")
-    ("name" . "main_window")
-    ("width" . 500)
-    ("height" . 500))
-("image"
-    ("src" . "Images/Sun.png")
-    ("name" . "sun1")
-    ("hOffset". 250)
-    ("vOffset" . 250)
-    ("alignment" . "center"))
-("text"
-    ("data" . "Click Here")
-    ("size" . 36)
-    ("style" . "bold")
-    ("name" . "text1")
-    ("hOffset" . 250)
-    ("vOffset". 100)
-    ("alignment" . "center")
-    ("onMouseUp" . "sun1.opacity = (sun1.opacity / 100) * 90;"))))
-
+  ("debug" . "on")
+  ("window"
+   ("title" . "Sample Konfabulator Widget")
+   ("name" . "main_window")
+   ("width" . 500)
+   ("height" . 500))
+  ("image"
+   ("src" . "Images/Sun.png")
+   ("name" . "sun1")
+   ("hOffset". 250)
+   ("vOffset" . 250)
+   ("alignment" . "center"))
+  ("text"
+   ("data" . "Click Here")
+   ("size" . 36)
+   ("style" . "bold")
+   ("name" . "text1")
+   ("hOffset" . 250)
+   ("vOffset". 100)
+   ("alignment" . "center")
+   ("onMouseUp" . "sun1.opacity = (sun1.opacity / 100) * 90;"))))
 ```
 
 
