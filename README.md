@@ -33,8 +33,7 @@ perform exception handling.
 ```
 
 #### Output
-
-```
+```scheme
 ((name . John Doe)
  (age . 43)
  (address
@@ -85,7 +84,7 @@ for various JSON data-types. Hooks are described in a separate section.
 ```
 
 ##### Output
-```
+```scheme
 #(1 2 3)
 ```
 
@@ -126,7 +125,7 @@ arguments are explained in a sepratate secion.
 ```
 
 ##### Output
-```
+```scheme
 (("menu"
   ("id" . "file")
   ("value" . "File")
@@ -186,7 +185,7 @@ data in given file. Optional hook arguments are explain in a separate section.
 ```
 
 ##### Output
-```
+```scheme
 (("widget"
   ("debug" . "on")
   ("window"
@@ -237,6 +236,10 @@ gson hooks are optional keyword arguments sent to
 procedures which are then applied to the scheme expressions parsed from
 the input JSON. Hooks let the user transform the output of the parser.
 
+By default, JSON data is converted into scheme expressions based on
+the [default conversion format](#default-conversion-format). You can
+change this via hooks.
+
 #### Example of json-string->scm with hooks
 
 ```scheme
@@ -253,6 +256,11 @@ the input JSON. Hooks let the user transform the output of the parser.
             #:number-hook (lambda (num-or-string) (1+ num-or-string))
             #:string-hook (lambda (string) (string-length string))
             #:boolean-hook (lambda (bool) (not bool))))
+```
+
+##### Output
+```scheme
+#(5 3 #t)
 ```
 
 #### object-hook
@@ -282,7 +290,6 @@ object-hook takes in a vector as argument and produces any output.
 (lambda (vector)
     (vector->list lst))
 ```
-
 
 #### number-hook
 number-hook is a optional procedure that is called on any
@@ -382,7 +389,21 @@ and caught by the user after which a clean error message was printed
 to the default output.
 
 ### Default Conversion Format
+| JSON Datatype | Guile Datatype    |
+|---------------|-------------------|
+| String        | String            |
+| Number        | *Number or String |
+| false         | #f                |
+| true          | #t                |
+| nil           | #nil              |
+| List          | Vector            |
+| Object        | **List of pairs   |
 
+\* If a number is too large to be represented in Guile, it is
+represented as a string.
+
+\*\* The first element of pair is the key, second element is the value
+for each property of JSON object.
 
 ## License
 Copyright (C) 2020 Ayush Jha <ayushjha@pm.me>
