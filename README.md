@@ -392,7 +392,7 @@ boolean-hook takes in a boolean as argument and produces any output.
 #### nil-hook
 By default, nil in JSON data maps to `#nil` in scheme expression. You
 can change this with the nil-hook that is a procedure which is called
-on all teh nil values in JSON data. The output of that procedure is
+on all the nil values in JSON data. The output of that procedure is
 used instead of #nil.
 
 ##### Example
@@ -405,7 +405,7 @@ This example shows a hook that maps nil value to `#f`.
 A GSON-JSON-INVALID exception is thrown if an error is found during
 JSON parsing with a list of two elements as argument. The first
 element of list contains line number and second element contains
-column number wherein the syntax error occured.
+column number wherein the syntax error occurred.
 
 Here is a simple example to demonstrate exception handling with gson.
 
