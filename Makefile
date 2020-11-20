@@ -5,5 +5,6 @@ install:
 uninstall:
 	rm -R `guile-config info sitedir`/gson*
 
-test: install
-	guile test.scm 2> /dev/null
+test:
+	git submodule update --init --recursive
+	make -C JSONTestSuite test
