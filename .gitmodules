@@ -1,3 +1,6 @@
 [submodule "tests"]
 	path = JSONTestSuite
 	url = https://github.com/ayys/JSONTestSuite.git
+[submodule "JSONTestSuite"]
+	path = JSONTestSuite
+	url = https://github.com/ayys/JSONTestSuite.git
